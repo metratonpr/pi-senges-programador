@@ -15,7 +15,7 @@ class EnderecoController extends Controller
     public function index()
     {
         //
-        $enderecos = Endereco::all();
+        $enderecos = Endereco::paginate(25);
         return view('admin.enderecos.index', compact('enderecos'));
     }
 
@@ -27,7 +27,7 @@ class EnderecoController extends Controller
         //
         $cidades = Cidade::all();
         
-        return view('admin.enderecos.index', compact('cidades'));
+        return view('admin.enderecos.create', compact('cidades'));
     }
 
     /**
@@ -37,7 +37,7 @@ class EnderecoController extends Controller
     {
         //
         Endereco::create($request->all());
-        return redirect()->away('/enderecos')
+        return redirect()->away('/admin/enderecos')
         ->with('success', 'Endereços possui dependentes!');
     }
 
@@ -48,7 +48,7 @@ class EnderecoController extends Controller
     {
         //
         $endereco = Endereco::find($id);
-        return view('admin.enderecos.index', compact('endereco'));
+        return view('admin.enderecos.show', compact('endereco'));
     }
 
     /**
@@ -58,7 +58,7 @@ class EnderecoController extends Controller
     {
         $cidades = Cidade::all();
         $endereco = Endereco::find($id);
-        return view('admin.enderecos.index', compact('cidades','endereco'));
+        return view('admin.enderecos.edit', compact('cidades','endereco'));
     }
 
     /**
@@ -70,7 +70,7 @@ class EnderecoController extends Controller
           $endereco = Endereco::find($id);
         $endereco->update($request->all());
 
-        return redirect()->away('/enderecos')
+        return redirect()->away('/admin/enderecos')
             ->with('success', 'Endereço possui dependentes!');
     }
 
@@ -81,15 +81,15 @@ class EnderecoController extends Controller
     {
         //
           $endereco = Endereco::find($id);
-        if($endereco->negocios()->count > 0 
+        if($endereco->negocios()->count() > 0 
        ||  $endereco->pontosTuristicos()->count() > 0)
         {
-            return redirect()->away('/enderecos')
+            return redirect()->away('/admin/enderecos')
             ->with('error', 'Endereços possui dependentes!');
         }
         $endereco->delete();
         
-        return redirect()->away('/enderecos')
+        return redirect()->away('/admin/enderecos')
             ->with('success', 'Endereços possui dependentes!');
     }
 }

@@ -37,7 +37,7 @@ class CidadeController extends Controller
     {
         //
         Cidade::create($request->all());
-        return redirect()->away('/cidades')
+        return redirect()->away('/admin/cidades')
             ->with('success', 'Cidade possui dependentes!');
     }
 
@@ -57,6 +57,7 @@ class CidadeController extends Controller
     public function edit($id)
     {
         //
+        $cidade = Cidade::find($id);
         $estados = Estado::all();
         return view('admin.cidades.edit', compact('cidade','estados'));
     }
@@ -70,7 +71,7 @@ class CidadeController extends Controller
         $cidade = Cidade::find($id);
         $cidade->update($request->all());
 
-        return redirect()->away('/cidades')
+        return redirect()->away('/admin/cidades')
             ->with('success', 'Cidade possui dependentes!');
     }
 
@@ -81,12 +82,12 @@ class CidadeController extends Controller
     {
         $cidade = Cidade::find($id);
         if ($cidade->enderecos()->count() > 0) {
-            return redirect()->away('/cidades')
+            return redirect()->away('/admin/cidades')
                 ->with('error', 'Cidade possui dependentes!');
         }
 
         $cidade->delete();
-        return redirect()->away('/cidades')
+        return redirect()->away('/admin/cidades')
             ->with('success', 'Cidade removido com sucesso!');
     }
 }

@@ -16,6 +16,27 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="/admin/noticias">Noticia</a>
         </li>        
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/admin/estados">Estados</a>
+        </li>        
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/admin/cidades">Cidade</a>
+        </li>        
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/admin/enderecos">Endereços</a>
+        </li>        
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/admin/tipos-negocios">Tipo Negocio</a>
+        </li>        
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/admin/negocios">Negocio</a>
+        </li>        
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/admin/tipos-pontos">Tipo Ponto</a>
+        </li>        
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/admin/pontos-turisticos">Ponto Turistico</a>
+        </li>        
       </ul>      
     </div>
   </div>

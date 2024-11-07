@@ -24,7 +24,7 @@ class AutorController extends Controller
     public function create()
     {
         //
-        return view('admin.autores.index');
+        return view('admin.autores.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class AutorController extends Controller
     {
         //
         Autor::create($request->all());
-        return redirect()->away('/autores')
+        return redirect()->away('/admin/autores')
             ->with('success', 'Autor criado com sucesso!');
     }
 
@@ -66,7 +66,7 @@ class AutorController extends Controller
         //
          $autor = Autor::find($id);
         $autor->update($request->all());
-        return redirect()->away('/autores')
+        return redirect()->away('/admin/autores')
             ->with('success', 'Autor atualizado com sucesso!');
     }
 
@@ -80,11 +80,11 @@ class AutorController extends Controller
         $autor = Autor::find($id);
         if ($autor->noticias()->count() > 0) {
 
-            return redirect()->away('/autores')
+            return redirect()->away('/admin/autores')
                 ->with('success', 'Autor possui dependentes!');
         }
         $autor->delete();
-        return redirect()->away('/autores')
+        return redirect()->away('/admin/autores')
             ->with('success', 'Autor criado com sucesso!');
     }
 }

@@ -1,101 +1,86 @@
 @extends('layout.app')
-@section('title', 'Criar Noticia')
-<!-- content -->
+
+@section('title', 'Editar Notícia')
+
 @section('conteudo')
-    <div class="row mx-auto">
-        <div class="mt-3 mb-3 col-6">
-            <h3>Criando Nova Noticia</h3>
-            <!-- form ilustrativo -->
-            <form action="/admin/noticias/{{$noticia->id}}/edit" method="POST" enctype="multipart/form-data">
-                <!-- Token -->
-                @csrf
-                <!-- Ajustar o metodo -->
-                @method('PUT')
-                
-                <!-- 'data' -->
-                <div class="form-group mb-2">
-                    <label for="data">Data da Noticia:</label>
-                    <input type="datetime-local" id="data" name="data" value="{{ old('data',$noticia->data) }}"
-                        class="form-control @error('data') is-invalid @enderror">
-                    @if ($errors->has('data'))
-                        <div class="text-danger">
-                            {{ $errors->first('data') }}
-                        </div>
-                    @endif
-                </div>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Cabeçalho -->
+                <h3 class="text-primary fw-bold mb-4">Editando Notícia</h3>
 
-                <!-- 'titulo' -->
-                <div class="form-group mb-2">
-                    <label for="titulo">Titulo da Noticia:</label>
-                    <input type="text" id="titulo" name="titulo" value="{{ old('titulo',$noticia->titulo) }}"
-                        class="form-control @error('titulo') is-invalid @enderror">
-                    @if ($errors->has('titulo'))
-                        <div class="text-danger">
-                            {{ $errors->first('titulo') }}
-                        </div>
-                    @endif
-                </div>
-                <!-- 'subtitulo' -->
-                <div class="form-group mb-2">
-                    <label for="subtitulo">Subtitulo da Noticia:</label>
-                    <input type="text" id="subtitulo" name="subtitulo" value="{{ old('subtitulo',$noticia->subtitulo) }}"
-                        class="form-control @error('subtitulo') is-invalid @enderror">
-                    @if ($errors->has('subtitulo'))
-                        <div class="text-danger">
-                            {{ $errors->first('subtitulo') }}
-                        </div>
-                    @endif
-                </div>
-                <!-- 'texto' -->
-                <div class="form-group mb-2">
-                    <label for="texto">Digite o texto da noticia:</label>
-                    <textarea id="texto" name="texto" class="form-control @error('texto') is-invalid @enderror">
-                {{ old('texto',$noticia->texto) }}
-                </textarea>
-                    @if ($errors->has('texto'))
-                        <div class="text-danger">
-                            {{ $errors->first('texto') }}
-                        </div>
-                    @endif
-                </div>
-                <!-- 'id_autor' -->
-                <div class="form-group mb-2">
-                    <label for="id_autor">Escolha um autor:</label>
-                    <select name="id_autor" id="id_autor" class="form-select @error('id_autor') is-invalid @enderror">
-                        <option selected disabled>Selecione um Autor.</option>
-                        @foreach ($autores as $autor)
-                            <option value="{{ $autor->id }}" {{ old('id_autor',$noticia->id_autor) == $autor->id ? 'selected' : '' }}>
-                                {{ $autor->nome }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('id_autor'))
-                        <div class="text-danger">
-                            {{ $errors->first('id_autor') }}
-                        </div>
-                    @endif
-                </div>
-                <!-- 'id_caderno' -->
-                <div class="form-group mb-2">
-                    <label for="id_caderno">Escolha um Caderno:</label>
-                    <select name="id_caderno" id="id_caderno" class="form-select @error('id_caderno') is-invalid @enderror">
-                        <option selected disabled>Selecione um Caderno.</option>
-                        @foreach ($cadernos as $caderno)
-                            <option value="{{ $caderno->id }}" {{ old('id_caderno',$noticia->id_caderno) == $caderno->id ? 'selected' : '' }}>
-                                {{ $caderno->nome }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('id_caderno'))
-                        <div class="text-danger">
-                            {{ $errors->first('id_caderno') }}
-                        </div>
-                    @endif
-                </div>
+                <!-- Formulário -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <form action="{{ route('admin.noticias.update', $noticia) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
 
-                <button type="submit" class="btn btn-success">
-                    Salvar</button>
-            </form>
+                            <!-- Data da Notícia -->
+                            <x-form.input 
+                                type="datetime-local" 
+                                name="data" 
+                                label="Data da Notícia" 
+                                :value="old('data', $noticia->data)" 
+                                required 
+                            />
+
+                            <!-- Título -->
+                            <x-form.input 
+                                type="text" 
+                                name="titulo" 
+                                label="Título da Notícia" 
+                                :value="old('titulo', $noticia->titulo)" 
+                                required 
+                            />
+
+                            <!-- Subtítulo -->
+                            <x-form.input 
+                                type="text" 
+                                name="subtitulo" 
+                                label="Subtítulo da Notícia" 
+                                :value="old('subtitulo', $noticia->subtitulo)" 
+                            />
+
+                            <!-- Texto da Notícia -->
+                            <x-form.textarea 
+                                name="texto" 
+                                label="Texto da Notícia" 
+                                required
+                            >
+                                {{ old('texto', $noticia->texto) }}
+                            </x-form.textarea>
+
+                            <!-- Autor -->
+                            <x-form.select 
+                                name="id_autor" 
+                                label="Escolha um Autor" 
+                                :options="$autores" 
+                                :value="old('id_autor', $noticia->id_autor)" 
+                                display="nome" 
+                                required 
+                            />
+
+                            <!-- Caderno -->
+                            <x-form.select 
+                                name="id_caderno" 
+                                label="Escolha um Caderno" 
+                                :options="$cadernos" 
+                                :value="old('id_caderno', $noticia->id_caderno)" 
+                                display="nome" 
+                                required 
+                            />
+
+                            <!-- Botão de Enviar -->
+                            <div class="text-end mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Atualizar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

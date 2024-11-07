@@ -21,6 +21,9 @@ class StoreNegocioRequest extends FormRequest
      */
     public function rules(): array
     {
+      
+       
+
         return [
             //
             'nome_fantasia' => 'required|string|min:3|max:255',
@@ -32,4 +35,11 @@ class StoreNegocioRequest extends FormRequest
             'id_endereco' => 'required|exists:enderecos,id'
         ];
     }
+
+    protected function prepareForValidation()
+{
+    $this->merge([
+        'ativo' => $this->has('ativo') ? true : false, // Define false se o campo estiver ausente
+    ]);
+}
 }

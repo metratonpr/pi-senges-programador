@@ -13,14 +13,14 @@ class Endereco extends Model
     'cep','id_cidade'];
 
     public function cidade(){
-        return $this->belongsTo(Cidade::class);
+        return $this->belongsTo(Cidade::class,'id_cidade');
     }
 
     public function negocios(){
-        return $this->hasMany(Negocio::class);
+        return $this->hasMany(Negocio::class,'id_endereco');
     }
 
     public function pontosTuristicos(){
-        return $this->hasMany(PontoTuristico::class);
+        return $this->hasMany(PontoTuristico::class,'id_endereco');
     }
 }

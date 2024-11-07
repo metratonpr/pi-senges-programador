@@ -1,99 +1,65 @@
 @extends('layout.app')
-@section('title','Noticias')
+
+@section('title', 'Notícias')
+
 @section('conteudo')
-<div class="mt-4">
-    <!-- cabecalho -->
-    <div>
-        <h2>Noticias</h2>
-    <!-- route('admin.noticias.edit',$noticia) -->        
-    <!-- php artisan route:list -->        
-        <a href="/admin/noticias/create"
-            class="btn btn-success" >Novo</a>
-    </div>
-    <!-- tabela -->
-    <div class="table-responsive">
-        <table class="table table-hover table-striped">
-            <thead class="text-center">
-                <tr>
-                    <th>Titulo</th>
-                    <th>Data</th>
-                    <th>Autor</th>
-                    <th colspan="3">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($noticias as $noticia)
-                <tr>
-                    <td>{{$noticia->titulo}}</td>
-                    <td>{{$noticia->data}}</td>
-                    <td>{{$noticia->autor->nome}}</td>
-                    <td>
-                        <!-- href é o link da pagina /admin/noticias/1/show -->
-                        <!-- route('admin.noticias.show',$noticia) -->
-                        <a href="/admin/noticias/{{$noticia->id}}"
-                            class="btn btn-sm btn-primary">
-                            <i class="bi bi-pass"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <!-- php artisan route:list -->
-                        <a href="/admin/noticias/{{$noticia->id}}/edit"
-                            class="btn btn-sm btn-warning">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-danger"
-                            data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                            data-noticia-id="{{$noticia->id}}">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-<!-- Modal de exclusão -->
-<div class="modal fade" id="confirmDeleteModal"
-    tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">
-                    Confirmar Remoção</h5>
-                <button type="button" class="btn btn-close"
-                    data-bs-dismiss="modal"></button>
+    <div class="mt-4 container">
+        <!-- Cabeçalho -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-primary fw-bold">Notícias</h2>
+            <a href="{{ route('admin.noticias.create') }}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Novo
+            </a>
+        </div>
+
+        <!-- Card com a Tabela -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Lista de Notícias</h5>
             </div>
-            <div class="modal-body">
-                Voce tem certeza que quer remover?
-            </div>
-            <div class="modal-footer">
-                <form id="deleteForm" action=""
-                    method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">
-                        Remover</button>
-                </form>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle mb-0">
+                        <thead class="table-dark text-center">
+                            <tr>
+                                <th scope="col" class="text-start" style="width: 40%;">Título</th>
+                                <th scope="col" style="width: 20%;">Data</th>
+                                <th scope="col" style="width: 20%;">Autor</th>
+                                <th scope="col" style="width: 20%;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($noticias as $noticia)
+                                <tr>
+                                    <td class="fw-bold text-start">{{ e($noticia->titulo) }}</td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($noticia->data)->format('d/m/Y') }}</td>
+                                    <td class="text-center">{{ $noticia->autor->nome }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.noticias.show', $noticia) }}" class="btn btn-sm btn-primary">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{{ route('admin.noticias.edit', $noticia) }}" class="btn btn-sm btn-warning">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <x-modals.confirm-delete :id="$noticia->id" routePrefix="admin.noticias" entity="notícia" />
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-3">
+                                        Nenhuma notícia encontrada.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<script>
-    var confirmDeleteModal =
-        document.getElementById('confirmDeleteModal');
-    
-    confirmDeleteModal
-    .addEventListener('show.bs.modal',function(event){
-        var button = event.relatedTarget
-        var noticiaId = button.getAttribute('data-noticia-id');
-        var form = document.getElementById('deleteForm');
-        form.action = "/admin/noticias/" + noticiaId;
-    });
-</script>
+        <!-- Paginação -->
+        <div class="mt-3">
+            {{ $noticias->links('pagination::bootstrap-5') }}
+        </div>
+    </div>
 @endsection

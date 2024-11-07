@@ -12,6 +12,6 @@ class Estado extends Model
     protected $fillable = ['sigla'];
 
     public function cidades(){
-        return $this->hasMany(Cidade::class);
+        return $this->hasMany(Cidade::class, 'id_estado');
     }
 }

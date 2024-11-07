@@ -12,6 +12,6 @@ class TipoPontoTuristico extends Model
     protected $fillable = ['tipo'];
 
     public function pontosTuristicos(){
-        return $this->hasMany(PontoTuristico::class);
+        return $this->hasMany(PontoTuristico::class,'id_tipo_ponto_turistico');
     }
 }

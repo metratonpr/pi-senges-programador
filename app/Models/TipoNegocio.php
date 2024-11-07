@@ -14,6 +14,6 @@ class TipoNegocio extends Model
     ];
 
     public function negocios(){
-        return $this->hasMany(Negocio::class);
+        return $this->hasMany(Negocio::class,'id_tipo_negocio');
     }
 }

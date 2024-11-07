@@ -28,10 +28,10 @@ class NegocioController extends Controller
     {
         //
         $enderecos = Endereco::all();
-        $tiposNegocios = TipoNegocio::all();
+        $tiposNegocio = TipoNegocio::all();
         return view(
             'admin.negocios.create',
-            compact('negocios', 'enderecos', 'tiposNegocios')
+            compact('enderecos', 'tiposNegocio')
         );
     }
 
@@ -42,7 +42,7 @@ class NegocioController extends Controller
     {
         //
         Negocio::create($request->all());
-        return redirect()->away('/negocios')
+        return redirect()->away('/admin/negocios')
             ->with('success', 'Negocio removido com sucesso!');
     }
 
@@ -61,11 +61,12 @@ class NegocioController extends Controller
      */
     public function edit($id)
     {
+        $negocio = Negocio::find($id);
         $enderecos = Endereco::all();
-        $tiposNegocios = TipoNegocio::all();
+        $tiposNegocio = TipoNegocio::all();
         return view(
             'admin.negocios.edit',
-            compact('negocio', 'enderecos', 'tiposNegocios')
+            compact('negocio', 'enderecos', 'tiposNegocio')
         );
     }
 
@@ -78,7 +79,7 @@ class NegocioController extends Controller
         $negocio = Negocio::find($id);
         $negocio->update($request->all());
 
-        return redirect()->away('/negocios')
+        return redirect()->away('/admin/negocios')
             ->with('success', 'Negocio removido com sucesso!');
     }
 
@@ -90,7 +91,7 @@ class NegocioController extends Controller
         //
         $negocio = Negocio::find($id);
         $negocio->delete();
-        return redirect()->away('/negocios')
+        return redirect()->away('/admin/negocios')
             ->with('success', 'Negocio removido com sucesso!');
     }
 }

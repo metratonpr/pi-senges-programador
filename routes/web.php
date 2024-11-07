@@ -78,7 +78,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('/cidades', CidadeController::class);
     Route::resource('/enderecos', EnderecoController::class);
     Route::resource('/tipos-negocios', TipoNegocioController::class);
-    Route::resource('/tipos-ponto', TipoPontoTuristicoController::class);
+    Route::resource('/tipos-pontos', TipoPontoTuristicoController::class);
     Route::resource('/negocios', NegocioController::class);
     Route::resource('/pontos-turisticos', PontoTuristicoController::class);
 });

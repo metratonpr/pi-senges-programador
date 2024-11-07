@@ -12,11 +12,11 @@ class Cidade extends Model
     protected $fillable = ['nome', 'id_estado'];
 
     public function estado(){
-        return $this->belongsTo(Estado::class);
+        return $this->belongsTo(Estado::class, 'id_estado');
 
     }
 
     public function enderecos(){
-        return $this->hasMany(Endereco::class);
+        return $this->hasMany(Endereco::class,'id_cidade');
     }
 }

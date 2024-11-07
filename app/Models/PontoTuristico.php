@@ -19,12 +19,12 @@ class PontoTuristico extends Model
         'id_tipo_ponto_turistico'
     ];
 
-    public function autor()
+    public function tipoPontoTuristico()
     {
-        return $this->belongsTo(Autor::class, 'id_autor');
+        return $this->belongsTo(TipoPontoTuristico::class, 'id_tipo_ponto_turistico');
     }
-    public function caderno()
+    public function endereco()
     {
-        return $this->belongsTo(Caderno::class, 'id_caderno');
+        return $this->belongsTo(Caderno::class, 'id_endereco');
     }
 }

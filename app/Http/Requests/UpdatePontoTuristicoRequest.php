@@ -28,7 +28,7 @@ class UpdatePontoTuristicoRequest extends FormRequest
             'latitude_longitude' => 'required|string|min:3|max:50',
             'descricao' => 'required|string|min:3',
             'como_chegar' => 'required|string|min:3|max:50',
-            'imagem' => 'required|string|min:3|max:50',
+            'imagem' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB máximo
             'id_endereco' => 'required|exists:enderecos,id',
             'id_tipo_ponto_turistico'=> 'required|exists:ponto_turisticos,id'
         ];

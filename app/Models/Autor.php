@@ -18,7 +18,7 @@ class Autor extends Model
 
     // explorar relacionametno com o noticias
     public function noticias(){
-        return $this->hasMany(Noticia::class);
+        return $this->hasMany(Noticia::class, 'id_autor');
     }
 
     // Relacionamentos
